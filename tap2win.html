@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tap2Win</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+    }
+    body {
+      background: linear-gradient(to bottom, #ff4d4d, #4d79ff);
+      color: white;
+      text-align: center;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    #top, #bottom {
+      height: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    #top {
+      background: rgba(0,0,0,0.2);
+    }
+    #bottom {
+      background: rgba(255,255,255,0.1);
+      transform: rotate(180deg); /* To make it feel like upside player */
+    }
+    button {
+      padding: 30px 60px;
+      font-size: 22px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: #ffffff33;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div id="top">
+    <button onclick="score('top')">TAP</button>
+  </div>
+  <div id="bottom">
+    <button onclick="score('bottom')">TAP</button>
+  </div>
+
+  <script>
+    let topScore = 0;
+    let bottomScore = 0;
+    const winLimit = 20;
+
+    function score(player) {
+      if (player === 'top') topScore++;
+      else bottomScore++;
+
+      if (topScore >= winLimit) {
+        alert('👆 Top player wins!');
+        reset();
+      }
+      if (bottomScore >= winLimit) {
+        alert('👇 Bottom player wins!');
+        reset();
+      }
+    }
+
+    function reset() {
+      topScore = 0;
+      bottomScore = 0;
+    }
+  </script>
+</body>
+</html>
