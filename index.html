@@ -2,64 +2,77 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>MixPlay</title>
     <style>
       body {
         margin: 0;
-        padding: 0;
-        height: 100vh;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #1c1c1c, #2d2d2d);
+        color: white;
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        background: linear-gradient(270deg, #ff3cac, #784ba0, #2b86c5);
-        background-size: 600% 600%;
-        animation: gradientMove 16s ease infinite;
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        color: white;
-        text-align: center;
-      }
-
-      @keyframes gradientMove {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-      }
-
-      .container {
         padding: 20px;
-        background-color: rgba(0, 0, 0, 0.4);
-        border-radius: 20px;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
       }
 
       h1 {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
+        font-size: 36px;
+        margin-bottom: 10px;
+        color: #00e0ff;
       }
 
-      .game-btn {
-        margin-top: 20px;
-        padding: 10px 25px;
-        font-size: 1.1rem;
-        background: #fff;
-        color: #000;
-        border: none;
+      p {
+        margin-bottom: 30px;
+        font-size: 18px;
+        color: #ccc;
+      }
+
+      .game-card {
+        background: #333;
+        padding: 20px;
         border-radius: 12px;
-        cursor: pointer;
-        transition: 0.3s;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        margin: 10px 0;
+        width: 300px;
+        text-align: center;
+        transition: transform 0.2s ease;
       }
 
-      .game-btn:hover {
-        background-color: #ddd;
+      .game-card:hover {
+        transform: scale(1.03);
+      }
+
+      .game-title {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: #00e0ff;
+      }
+
+      .play-button {
+        background-color: #00e0ff;
+        color: black;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+      }
+
+      .play-button:hover {
+        background-color: #00bcd4;
       }
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>Welcome to MixPlay</h1>
-      <button class="game-btn" onclick="location.href='tap2win/index.html'">Tap2Win</button>
+    <h1>Mix Gaming 444</h1>
+    <p>Play games made by Mix!</p>
+
+    <div class="game-card">
+      <div class="game-title">Tap2Win</div>
+      <button class="play-button" onclick="location.href='tap2win/index.html'">Play Tap2Win</button>
     </div>
+
   </body>
 </html>
