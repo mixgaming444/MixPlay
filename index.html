@@ -5,87 +5,115 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>MixPlay</title>
   <style>
-    * {margin: 0; padding: 0; box-sizing: border-box;}
-    body, html {height: 100%; font-family: sans-serif; background: #111; color: #fff;}
-    .splash {
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('https://wallpapercave.com/wp/wp11339808.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+      overflow: hidden;
+    }
+    #splash {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: #000;
-      display: flex; align-items: center; justify-content: center;
-      z-index: 9999;
-      transition: opacity 1s ease;
+      width: 100vw;
+      height: 100vh;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 10;
+      animation: fadeOut 2s ease 3s forwards;
     }
-    .splash img {width: 120px; animation: pulse 1.5s infinite;}
-    @keyframes pulse {
-      0%, 100% {transform: scale(1);}
-      50% {transform: scale(1.1);}
+    @keyframes fadeOut {
+      to { opacity: 0; visibility: hidden; }
     }
-    .hidden {opacity: 0; pointer-events: none;}
-
-    .container {
-      padding: 20px;
+    #splash h1 {
+      font-size: 3em;
+      color: #0ff;
+      animation: zoom 2s ease-in-out infinite;
+    }
+    @keyframes zoom {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+    #main {
+      display: none;
+      padding: 2rem;
+    }
+    #logo {
+      font-size: 2.5rem;
+      color: #0ff;
+      margin-bottom: 1rem;
+    }
+    #gamesList {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
     }
     .game-card {
-      background: #222;
+      background: rgba(0, 0, 0, 0.6);
+      padding: 1rem;
       border-radius: 10px;
-      padding: 15px;
-      margin-bottom: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       text-align: center;
+      transition: 0.3s;
+      cursor: pointer;
     }
-    .game-card img {
+    .game-card:hover {
+      background: rgba(0, 0, 0, 0.8);
+      transform: scale(1.05);
+    }
+    iframe {
       width: 100%;
-      max-width: 300px;
-      border-radius: 10px;
-    }
-    .game-card h2 {
-      margin: 10px 0 5px;
-    }
-    .game-card a {
-      background: #0f0;
-      color: #000;
-      padding: 8px 16px;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-      margin-top: 10px;
+      height: 80vh;
+      border: none;
+      display: none;
+      margin-top: 1rem;
     }
   </style>
 </head>
 <body>
-  <div class="splash" id="splash">
-    <img src="logo.png" alt="Loading...">
+
+  <div id="splash">
+    <h1>Loading MixPlay...</h1>
   </div>
 
-  <div class="container" id="games-container" style="display: none;"></div>
+  <div id="main">
+    <div id="logo">🎮 MixPlay</div>
+    <div id="gamesList"></div>
+    <iframe id="gameFrame"></iframe>
+  </div>
 
   <script>
-    // Splash fade out
-    window.addEventListener("load", () => {
-      setTimeout(() => {
-        document.getElementById("splash").classList.add("hidden");
-        document.getElementById("games-container").style.display = "block";
-      }, 2000);
-    });
+    // Show main content after splash
+    setTimeout(() => {
+      document.getElementById('splash').style.display = 'none';
+      document.getElementById('main').style.display = 'block';
+    }, 3500);
 
-    // Load games from JSON
-    fetch("games.json")
-      .then(res => res.json())
-      .then(games => {
-        const container = document.getElementById("games-container");
-        games.forEach(game => {
-          const card = document.createElement("div");
-          card.className = "game-card";
-          card.innerHTML = `
-            <img src="${game.image}" alt="${game.name}">
-            <h2>${game.name}</h2>
-            <a href="${game.file}" target="_blank">Play</a>
-          `;
-          container.appendChild(card);
-        });
+    async function loadGames() {
+      const response = await fetch('games.json');
+      const games = await response.json();
+      const list = document.getElementById('gamesList');
+
+      games.forEach(game => {
+        const card = document.createElement('div');
+        card.className = 'game-card';
+        card.innerText = game.name;
+        card.onclick = () => {
+          const frame = document.getElementById('gameFrame');
+          frame.src = `games/${game.file}`;
+          frame.style.display = 'block';
+        };
+        list.appendChild(card);
       });
+    }
+
+    loadGames();
   </script>
 </body>
 </html>
