@@ -3,117 +3,100 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mix Gaming 444</title>
+  <title>MixGaming Arcade</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
     body {
+      margin: 0;
+      font-family: sans-serif;
       background: #111;
       color: white;
-      overflow-x: hidden;
-    }
-    #loader {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #111;
       display: flex;
-      align-items: center;
-      justify-content: center;
       flex-direction: column;
-      z-index: 9999;
+      align-items: center;
     }
-    #loader img {
-      width: 120px;
-      animation: pulse 1.5s infinite;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 0.7; }
-      50% { transform: scale(1.1); opacity: 1; }
-      100% { transform: scale(1); opacity: 0.7; }
-    }
-    .container {
+    header {
       padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
     }
-    .game-box {
-      background: #222;
-      border-radius: 12px;
-      padding: 15px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    header img {
+      width: 100px;
+    }
+    h1 {
+      margin: 10px 0 20px;
       text-align: center;
+    }
+    #games {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      max-width: 1000px;
+      padding: 20px;
+    }
+    .game-card {
+      background: #222;
+      border-radius: 10px;
+      overflow: hidden;
+      width: 200px;
+      text-align: center;
+      transition: 0.3s;
       box-shadow: 0 0 10px #000;
     }
-    .game-box img {
+    .game-card:hover {
+      transform: scale(1.05);
+    }
+    .game-card img {
       width: 100%;
-      max-width: 300px;
-      border-radius: 10px;
+      height: 150px;
+      object-fit: cover;
     }
-    .game-box h2 {
-      margin: 10px 0 5px;
-      font-size: 22px;
+    .game-card h3 {
+      margin: 10px 0;
     }
-    .game-box p {
-      font-size: 14px;
-      color: #ccc;
-    }
-    .game-box button {
-      margin-top: 10px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 20px;
-      background: #00ffcc;
-      color: #000;
+    .game-card a {
+      display: inline-block;
+      margin-bottom: 15px;
+      padding: 8px 15px;
+      background: #00c3ff;
+      color: black;
       font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .game-box button:hover {
-      background: #00b89c;
+      text-decoration: none;
+      border-radius: 5px;
     }
   </style>
 </head>
 <body>
+  <header>
+    <img src="logo.png" alt="Logo" />
+    <h1>MixGaming Arcade</h1>
+  </header>
 
-  <div id="loader">
-    <img src="logo.png" alt="Loading...">
-  </div>
-
-  <div class="container" style="display:none;">
-    <!-- Game 1 -->
-    <div class="game-box">
-      <img src="https://via.placeholder.com/300x180.png?text=Game+1" alt="Game 1">
-      <h2>Game One</h2>
-      <p>First game in the list. Tap to start playing!</p>
-      <button onclick="location.href='game1.html'">Play</button>
-    </div>
-
-    <!-- Game 2 -->
-    <div class="game-box">
-      <img src="https://via.placeholder.com/300x180.png?text=Game+2" alt="Game 2">
-      <h2>Game Two</h2>
-      <p>Another cool game coming up. Try it out!</p>
-      <button onclick="location.href='game2.html'">Play</button>
-    </div>
-
-    <!-- Add more game-box sections here -->
-  </div>
+  <div id="games">Loading games...</div>
 
   <script>
-    setTimeout(() => {
-      document.getElementById('loader').style.display = 'none';
-      document.querySelector('.container').style.display = 'flex';
-    }, 2000); // show animation for 2 secs
-  </script>
+    async function loadGames() {
+      try {
+        const res = await fetch('games.json');
+        const games = await res.json();
+        const container = document.getElementById('games');
+        container.innerHTML = '';
 
+        games.forEach(game => {
+          const card = document.createElement('div');
+          card.className = 'game-card';
+          card.innerHTML = `
+            <img src="${game.image}" alt="${game.title}" />
+            <h3>${game.title}</h3>
+            <a href="${game.url}" target="_blank">Play</a>
+          `;
+          container.appendChild(card);
+        });
+      } catch (err) {
+        document.getElementById('games').innerText = 'Failed to load games.';
+        console.error(err);
+      }
+    }
+
+    loadGames();
+  </script>
 </body>
 </html>
