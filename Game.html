@@ -1,0 +1,53 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choose Game Mode</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4, #fbc2eb, #a6c1ee);
+      background-size: 400% 400%;
+      animation: gradientBG 10s ease infinite;
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: white;
+      text-align: center;
+    }@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+h1 {
+  font-size: 32px;
+  margin-bottom: 30px;
+}
+
+.option {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px 30px;
+  border-radius: 20px;
+  margin: 10px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-size: 24px;
+}
+
+.option:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+  </style>
+</head>
+<body>
+  <h1>Play Game With:</h1>
+  <div class="option">1: Robot</div>
+  <div class="option">2: Friend</div>
+</body>
+</html>
